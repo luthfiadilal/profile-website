@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ThemeToggle } from "./ThemeToggle";
 import MagneticButton from "./MagneticButton";
 
 const navLinks = [
@@ -67,7 +66,7 @@ export default function Navbar() {
 
         {/* CTA Button & Theme Toggle */}
         <div className="hidden md:flex items-center gap-6 nav-item">
-          <ThemeToggle />
+
           <MagneticButton
             href="#contact"
             className="px-6 py-2.5 text-sm font-medium rounded-full border border-[var(--accent-primary)] text-[var(--accent-primary)]"
@@ -80,7 +79,6 @@ export default function Navbar() {
 
         {/* Mobile Menu Button - Align right on mobile */}
         <div className="md:hidden flex items-center gap-4 nav-item z-50">
-          <ThemeToggle />
           <button
             className="flex flex-col gap-1.5 p-2"
             onClick={() => setMenuOpen(!menuOpen)}
