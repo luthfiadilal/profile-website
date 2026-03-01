@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary-base: var(--bg-primary);
+  --color-primary-accent: var(--accent-primary);
+  --color-text-main: var(--text-primary);
+  --color-text-muted: var(--text-secondary);
+  --color-border-subtle: var(--border-color);
+}
+
+:root {
+  /* Light Mode (Default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --bg-card: #ffffff;
+  /* Leaf Green for Light Mode */
+  --accent-primary: #22c55e;
+  --accent-secondary: #16a34a;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --border-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  /* Dark Mode */
+  --bg-primary: #080808;
+  --bg-secondary: #121212;
+  --bg-card: #1a1a1a;
+  /* Light Orange for Dark Mode */
+  --accent-primary: #fdba74;
+  --accent-secondary: #fb923c;
+  --text-primary: #fafafa;
+  --text-secondary: #a3a3a3;
+  --border-color: rgba(255, 255, 255, 0.08);
+}
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 4px;
+}
+
+/* Section padding */
+.section-padding {
+  padding: 8rem 0;
+}
+
+/* Utility for hiding elements before GSAP loads (optional FOUC prevention) */
+.invisible-until-gsap {
+  visibility: hidden;
+}
+
+/* Smooth hover transitions for all buttons and interactive elements */
+a,
+button {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
