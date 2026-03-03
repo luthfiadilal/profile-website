@@ -19,10 +19,10 @@ export default function ScrollTheme() {
         const setDark = () => html.classList.add("dark");
         const setLight = () => html.classList.remove("dark");
 
-        // Force dark when Skills section enters viewport
+        // Force dark when Skills section enters viewport (pin locks at top top)
         const triggerDark = ScrollTrigger.create({
             trigger: "#skills",
-            start: "top 60%",
+            start: "top top",
             onEnter: setDark,        // scroll down into Skills → dark
             onEnterBack: setDark,    // scroll up back into Skills from Projects → dark
             onLeaveBack: setLight,   // scroll up past Skills back to About → light
@@ -31,7 +31,7 @@ export default function ScrollTheme() {
         // Restore light when Contact section enters viewport
         const triggerLight = ScrollTrigger.create({
             trigger: "#contact",
-            start: "top 60%",
+            start: "top top",
             onEnter: setLight,       // scroll down into Contact → light
             onLeaveBack: setDark,    // scroll up back into Projects → dark
         });

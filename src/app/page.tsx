@@ -1,7 +1,6 @@
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import SkillsSection from "@/components/SkillsSection";
-import ProjectsSection from "@/components/ProjectsSection";
+import SkillsProjectsSection from "@/components/SkillsProjectsSection";
 import ContactSection from "@/components/ContactSection";
 import ScrollTheme from "@/components/ScrollTheme";
 
@@ -11,8 +10,7 @@ export default function Home() {
       <ScrollTheme />
       <HeroSection />
       <AboutSection />
-      <SkillsSection />
-      <ProjectsSection />
+      <SkillsProjectsSection />
       <ContactSection />
     </>
   );

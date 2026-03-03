@@ -8,6 +8,8 @@ if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
+import HeroAnimatedLines from "./HeroAnimatedLines";
+
 export default function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -82,6 +84,10 @@ export default function HeroSection() {
 
     return (
         <section ref={containerRef} id="hero" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[var(--bg-primary)] transition-colors duration-500">
+
+            {/* Animated Background Lines */}
+            <HeroAnimatedLines />
+
             <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 text-center flex flex-col items-center">
                 {/* Badge */}
                 <div className="hero-badge opacity-0 flex items-center gap-3 px-4 py-1.5 rounded-full border border-[var(--border-color)] bg-[var(--bg-secondary)] text-[var(--text-primary)] text-xs font-medium tracking-wide mb-10">
