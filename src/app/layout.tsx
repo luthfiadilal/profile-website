@@ -26,8 +26,8 @@ export default function RootLayout({
       <body className="antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-500">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
+          disableTransitionOnChange
         >
           <CustomCursor />
           <Navbar />

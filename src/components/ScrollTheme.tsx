@@ -8,43 +8,40 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * ScrollTheme — automatically switches to dark mode when entering Skills
- * section (stays dark through Projects), then restores light when Contact
- * comes into view. Scroll-up direction is also handled.
+ * ScrollTheme — forces dark mode when entering Skills/Projects,
+ * then restores light when Contact comes into view.
+ * The site default is always light (set in layout.tsx).
  */
 export default function ScrollTheme() {
     useEffect(() => {
         const html = document.documentElement;
 
-        const setDark = () => html.setAttribute("data-scroll-theme", "dark");
-        const setLight = () => html.removeAttribute("data-scroll-theme");
+        const setDark = () => html.classList.add("dark");
+        const setLight = () => html.classList.remove("dark");
 
-        // Dark mode zone: starts when #skills enters, ends when #contact enters
-        // onLeaveBack = scrolled UP past the Skills top → back to About → light
+        // Force dark when Skills section enters viewport
         const triggerDark = ScrollTrigger.create({
             trigger: "#skills",
             start: "top 60%",
-            onEnter: setDark,        // scrolling down into Skills → dark
-            onEnterBack: setDark,    // scrolling up, re-entering Skills from Projects → dark
-            onLeaveBack: setLight,   // scrolling up, leaving Skills back to About → light ✅
+            onEnter: setDark,        // scroll down into Skills → dark
+            onEnterBack: setDark,    // scroll up back into Skills from Projects → dark
+            onLeaveBack: setLight,   // scroll up past Skills back to About → light
         });
 
-        // Light mode restore: when Contact enters
-        // onLeaveBack = scrolled back UP from Contact into Projects → dark
+        // Restore light when Contact section enters viewport
         const triggerLight = ScrollTrigger.create({
             trigger: "#contact",
             start: "top 60%",
-            onEnter: setLight,       // scrolling down into Contact → light
-            onLeaveBack: setDark,    // scrolling up, leaving Contact back to Projects → dark
+            onEnter: setLight,       // scroll down into Contact → light
+            onLeaveBack: setDark,    // scroll up back into Projects → dark
         });
 
         return () => {
             triggerDark.kill();
             triggerLight.kill();
-            setLight();
+            setLight(); // always restore light on unmount
         };
     }, []);
 
     return null;
 }
-

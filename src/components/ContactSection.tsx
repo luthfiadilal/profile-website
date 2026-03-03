@@ -164,6 +164,7 @@ export default function ContactSection() {
                                     onChange={handleChange}
                                     className="w-full bg-transparent border-b border-[var(--border-color)] rounded-none px-0 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-all placeholder-[var(--text-secondary)]/50"
                                     placeholder="John Doe"
+                                    suppressHydrationWarning
                                 />
                             </div>
                             <div>
@@ -177,6 +178,7 @@ export default function ContactSection() {
                                     onChange={handleChange}
                                     className="w-full bg-transparent border-b border-[var(--border-color)] rounded-none px-0 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-all placeholder-[var(--text-secondary)]/50"
                                     placeholder="john@example.com"
+                                    suppressHydrationWarning
                                 />
                             </div>
                         </div>
@@ -190,6 +192,7 @@ export default function ContactSection() {
                                 onChange={handleChange}
                                 className="w-full bg-transparent border-b border-[var(--border-color)] rounded-none px-0 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-all placeholder-[var(--text-secondary)]/50"
                                 placeholder="Project Inquiry"
+                                suppressHydrationWarning
                             />
                         </div>
                         <div>
@@ -210,6 +213,7 @@ export default function ContactSection() {
                             type="submit"
                             disabled={status === "sending" || status === "sent"}
                             className="w-full py-4 mt-4 rounded-full border border-transparent bg-[var(--accent-primary)] text-[var(--bg-primary)] font-medium text-sm hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 group"
+                            suppressHydrationWarning
                         >
                             {status === "sending" ? "Sending..." : status === "sent" ? "Message Sent" : (
                                 <>
