@@ -3,227 +3,192 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ArrowUpRight, Github } from "lucide-react";
+
+import { projects, PALETTES } from "./projects/data";
+import SkillsPanel from "./projects/SkillsPanel";
+import ProjectPanel from "./projects/ProjectPanel";
 
 if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-const skillCategories = [
-    {
-        title: "Frontend",
-        skills: ["React", "Next.js", "Vue.js", "TypeScript", "Tailwind CSS", "GSAP Animations"],
-    },
-    {
-        title: "Backend & Mobile",
-        skills: ["Node.js", "Express", "Flutter / Dart", "REST APIs", "Supabase", "MySQL"],
-    },
-    {
-        title: "Tools & Platform",
-        skills: ["Git & GitHub", "Vercel", "Figma", "Postman", "Python (AI/ML)", "Android Studio"],
-    },
-];
+// ─── Animation helpers ────────────────────────────────────────────
 
-const projects = [
-    {
-        title: "Prediksi Melanoma",
-        description: "Aplikasi web berbasis AI untuk mendeteksi dan memprediksi penyakit melanoma pada kulit menggunakan deep learning dan Computer Vision.",
-        tags: ["React", "Python", "AI/ML", "Vercel"],
-        link: "https://prediksi-melanoma.vercel.app",
-        github: "https://github.com/luthfiadilal/Prediksi-Melanoma",
-    },
-    {
-        title: "Aksara Sunda App",
-        description: "Aplikasi mobile Flutter untuk belajar dan mengenali aksara Sunda (huruf tradisional Sunda) menggunakan machine learning. Repo dengan ★10 bintang.",
-        tags: ["Flutter", "Dart", "ML Kit", "Android"],
-        link: "#",
-        github: "https://github.com/luthfiadilal/aksara-sunda-app",
-    },
-    {
-        title: "CBT Exam System",
-        description: "Sistem ujian berbasis komputer (Computer-Based Test) full-stack dengan fitur soal, timer, hasil, dan manajemen peserta ujian.",
-        tags: ["React", "Node.js", "Express", "Supabase"],
-        link: "https://cbt-ruddy.vercel.app",
-        github: "https://github.com/luthfiadilal/front-end-CBT",
-    },
-    {
-        title: "GIS Disaster App",
-        description: "Aplikasi mobile Flutter untuk pelaporan dan pemetaan bencana alam berbasis GIS, termasuk visualisasi lokasi bencana secara real-time.",
-        tags: ["Flutter", "Dart", "GIS", "Maps API"],
-        link: "#",
-        github: "https://github.com/luthfiadilal/app-disaster",
-    },
-    {
-        title: "Payout App",
-        description: "Aplikasi manajemen keuangan dan penggajian (payout) yang dibangun dengan TypeScript dan Next.js, dengan UI modern dan responsif.",
-        tags: ["Next.js", "TypeScript", "Tailwind", "Vercel"],
-        link: "https://payout-ruddy.vercel.app",
-        github: "https://github.com/luthfiadilal/Payout",
-    },
-    {
-        title: "Kasir & POS Web",
-        description: "Sistem kasir dan point-of-sale (POS) berbasis web dengan fitur manajemen produk, transaksi, laporan penjualan, dan dashboard admin.",
-        tags: ["JavaScript", "Node.js", "Express", "MySQL"],
-        link: "https://pos-web-omega.vercel.app",
-        github: "https://github.com/luthfiadilal/pos-web",
-    },
-];
+async function playTitle(chars: NodeListOf<Element>, dir: "down" | "up") {
+  const { animate, stagger } = await import("animejs");
+  const fromY = dir === "down" ? "110%" : "-110%";
+
+  // Snap to start position instantly
+  animate(chars, {
+    translateY: fromY,
+    opacity: 0,
+    filter: "blur(8px)",
+    duration: 0,
+  });
+
+  // Reveal
+  animate(chars, {
+    translateY: ["0%"],
+    opacity: [1],
+    filter: ["blur(0px)"],
+    duration: 850,
+    delay: stagger(28),
+    ease: "outExpo",
+  });
+}
+
+async function hideTitle(chars: NodeListOf<Element>, dir: "down" | "up") {
+  const { animate } = await import("animejs");
+  animate(chars, {
+    translateY: dir === "down" ? "110%" : "-110%",
+    opacity: 0,
+    filter: "blur(8px)",
+    duration: 0,
+  });
+}
+
+function playFade(items: NodeListOf<Element>, dir: "down" | "up") {
+  gsap.killTweensOf(items);
+  gsap.set(items, { y: dir === "down" ? 40 : -40, opacity: 0 });
+  gsap.to(items, {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    stagger: 0.12,
+    ease: "power3.out",
+  });
+}
+
+function hideFade(items: NodeListOf<Element>, dir: "down" | "up") {
+  gsap.killTweensOf(items);
+  gsap.set(items, { y: dir === "down" ? 40 : -40, opacity: 0 });
+}
+
+// ─── Main Component ───────────────────────────────────────────────
 
 export default function SkillsProjectsSection() {
-    const sectionRef = useRef<HTMLElement>(null);
-    const skillsWrapRef = useRef<HTMLDivElement>(null);
-    const projectsWrapRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    useGSAP(() => {
-        const ctx = gsap.context(() => {
-            // Setup initial hidden states
-            gsap.set([".skills-header", ".skill-category"], { opacity: 0, y: 40 });
-            gsap.set(projectsWrapRef.current, { opacity: 0, pointerEvents: "none" }); // Hide entire projects section initially
-            gsap.set([".projects-header", ".project-card"], { opacity: 0, y: 40 });
+  useGSAP(
+    () => {
+      const panels = gsap.utils.toArray<HTMLElement>(".sticky-panel");
 
-            // Unified timeline for the single pinned section
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top top",
-                    end: "+=400%", // 4x viewport height for both sections combined
-                    pin: true,
-                    scrub: 1,
-                }
+      panels.forEach((panel, i) => {
+        const chars = panel.querySelectorAll(".split-char");
+        const fadeItems = panel.querySelectorAll(".fade-up-item");
+
+        // ── Set initial hidden state ──
+        hideTitle(chars, "down");
+        hideFade(fadeItems, "down");
+
+        // ── Bidirectional content reveal ──
+        ScrollTrigger.create({
+          trigger: panel,
+          start: "top 80%",
+          onEnter: () => {
+            playTitle(chars, "down");
+            playFade(fadeItems, "down");
+          },
+          onEnterBack: () => {
+            playTitle(chars, "up");
+            playFade(fadeItems, "up");
+          },
+          onLeave: () => {
+            hideTitle(chars, "up");
+            hideFade(fadeItems, "up");
+          },
+          onLeaveBack: () => {
+            hideTitle(chars, "down");
+            hideFade(fadeItems, "down");
+          },
+        });
+
+        // ── Stacked-card shrink: only applies to project panels (skip Skills at i=0) ──
+        if (i > 0 && i < panels.length - 1) {
+          const nextPanel = panels[i + 1];
+          const card = panel.querySelector<HTMLElement>(".card-inner");
+          const overlay = panel.querySelector<HTMLElement>(".card-overlay");
+
+          if (card) {
+            // Start state: flat corners, no rotation, full size
+            gsap.set(card, {
+              borderRadius: "0px",
+              scale: 1,
+              rotation: 0,
+              transformOrigin: "top center",
             });
 
-            // 1. SKILLS SEQUENCE
-            tl.to(".skills-header", { opacity: 1, y: 0, duration: 1 })
-                .to(".skill-category", { opacity: 1, y: 0, duration: 1, stagger: 0.8 })
+            // Animate: shrink + tilt + round corners as next card covers this one
+            gsap.to(card, {
+              scale: 0.82, // noticeably smaller so rotation is visible
+              rotation: -8, // subtle CCW tilt — matches reference image
+              borderRadius: "3rem", // rounded card look
+              ease: "none",
+              scrollTrigger: {
+                trigger: nextPanel,
+                start: "top bottom",
+                end: "top top",
+                scrub: 1.2,
+              },
+            });
+          }
 
-                // Extra pause so user can read before it fades out
-                .to({}, { duration: 1 })
+          if (overlay) {
+            gsap.set(overlay, { opacity: 0 });
+            gsap.to(overlay, {
+              opacity: 0.3, // subtle dim, not too dark
+              ease: "none",
+              scrollTrigger: {
+                trigger: nextPanel,
+                start: "top bottom",
+                end: "top top",
+                scrub: 1.2,
+              },
+            });
+          }
+        }
+      });
+    },
+    { scope: containerRef },
+  );
 
-                // Fade out Skills wrapper (and move it up slightly)
-                .to(skillsWrapRef.current, { opacity: 0, y: -40, duration: 1.5, pointerEvents: "none" }, "transition")
+  // ─── Render ───────────────────────────────────────────────────
 
-                // 2. PROJECTS SEQUENCE (starts at same "transition" label)
-                // Make projects visible to animating
-                .set(projectsWrapRef.current, { opacity: 1, pointerEvents: "auto" }, "transition")
-                .to(".projects-header", { opacity: 1, y: 0, duration: 1 })
-                .to(".project-card", { opacity: 1, y: 0, duration: 1.5, stagger: 0.8 });
-
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, { scope: sectionRef });
-
-    return (
-        <section
-            id="skills"
-            ref={sectionRef}
-            className="w-full h-screen bg-[var(--bg-primary)] border-t border-[var(--border-color)] transition-colors duration-500 overflow-hidden relative"
+  return (
+    <div id="skills" ref={containerRef} className="relative w-full">
+      {/* ── Panel 1: Skills ────────── */}
+      <section
+        className="sticky-panel sticky top-0 h-screen flex flex-col justify-center"
+        style={{ zIndex: 10, backgroundColor: "var(--bg-primary)" }}
+      >
+        {/* card-inner: the white/light card — no scale animation, no inner shadow */}
+        <div
+          className="card-inner absolute inset-0 flex flex-col justify-center overflow-hidden will-change-transform"
+          style={{ backgroundColor: "var(--bg-primary)" }}
         >
-            {/* ── SKILLS WRAPPER ── */}
-            <div ref={skillsWrapRef} className="absolute inset-0 w-full h-full flex flex-col justify-center">
-                <div className="max-w-5xl w-full mx-auto px-6">
-                    <div className="skills-header mb-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
-                        <div>
-                            <div className="flex items-center gap-4 mb-6">
-                                <span className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--accent-primary)]">Expertise</span>
-                                <div className="h-px w-12 bg-[var(--border-color)]" />
-                            </div>
-                            <h2 className="font-outfit font-light text-4xl md:text-6xl text-[var(--text-primary)] tracking-tight">
-                                Tools of <span className="font-serif italic text-[var(--accent-primary)]">the trade.</span>
-                            </h2>
-                        </div>
-                        <p className="text-[var(--text-secondary)] text-lg font-light leading-relaxed mb-1 md:mb-0">
-                            I continuously learn and adapt to the best tools available, ensuring I deliver scalable, performant, and beautiful applications.
-                        </p>
-                    </div>
+          {/* dark overlay for dimming effect */}
+          <div className="card-overlay absolute inset-0 bg-black pointer-events-none opacity-0 z-40" />
+          <SkillsPanel />
+        </div>
+      </section>
 
-                    <div className="skills-grid-wrapper grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16">
-                        {skillCategories.map((category) => (
-                            <div key={category.title} className="skill-category group">
-                                <h3 className="font-outfit text-2xl text-[var(--text-primary)] mb-8 pb-4 border-b border-[var(--border-color)] group-hover:border-[var(--text-primary)] transition-colors duration-500">
-                                    {category.title}
-                                </h3>
-                                <ul className="flex flex-col gap-4">
-                                    {category.skills.map((skill) => (
-                                        <li
-                                            key={skill}
-                                            className="flex items-center gap-3 text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors duration-300"
-                                        >
-                                            <div className="w-1 h-1 bg-[var(--accent-primary)] rounded-full opacity-50 group-hover:opacity-100 transition-opacity" />
-                                            <span className="font-light tracking-wide">{skill}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* ── PROJECTS WRAPPER ── */}
-            <div ref={projectsWrapRef} className="absolute inset-0 w-full h-full flex flex-col justify-center">
-                <div className="max-w-5xl w-full mx-auto px-6">
-                    <div className="projects-header mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
-                        <div>
-                            <div className="flex items-center gap-4 mb-6">
-                                <span className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--accent-primary)]">Work</span>
-                                <div className="h-px w-12 bg-[var(--border-color)]" />
-                            </div>
-                            <h2 className="font-outfit font-light text-4xl md:text-6xl text-[var(--text-primary)] tracking-tight">
-                                Selected <span className="font-serif italic text-[var(--accent-primary)]">Projects.</span>
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div className="projects-grid-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                        {projects.map((project) => (
-                            <div
-                                key={project.title}
-                                className="project-card flex flex-col justify-between p-8 border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--text-primary)] transition-all duration-300 rounded-xl"
-                            >
-                                <div>
-                                    <h3 className="font-outfit font-medium text-2xl text-[var(--text-primary)] mb-4">{project.title}</h3>
-                                    <p className="text-[var(--text-secondary)] text-sm font-light leading-relaxed mb-8">{project.description}</p>
-                                </div>
-
-                                <div className="mt-auto">
-                                    <div className="flex flex-wrap gap-2 mb-8">
-                                        {project.tags.map((tag) => (
-                                            <span
-                                                key={tag}
-                                                className="px-2.5 py-1 text-[10px] uppercase tracking-wider rounded-sm bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-secondary)]"
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex items-center gap-5 pt-4 border-t border-[var(--border-color)]">
-                                        <a
-                                            href={project.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[var(--text-primary)] hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider"
-                                        >
-                                            Live
-                                            <ArrowUpRight className="w-3.5 h-3.5" />
-                                        </a>
-                                        <a
-                                            href={project.github}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider"
-                                        >
-                                            GitHub
-                                            <Github className="w-3.5 h-3.5" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+      {/* ── Panels 2–N: Projects ────── */}
+      {projects.map((project, i) => (
+        <section
+          key={project.title}
+          className="sticky-panel sticky top-0 h-screen flex flex-col justify-center bg-black"
+          style={{ zIndex: 11 + i }}
+        >
+          <div
+            className="card-inner absolute inset-0 flex flex-col justify-center overflow-hidden will-change-transform"
+            style={{ backgroundColor: PALETTES[project.palette].bg }}
+          >
+            {/* dark overlay for dimming effect */}
+            <div className="card-overlay absolute inset-0 bg-black pointer-events-none opacity-0 z-40" />
+            <ProjectPanel project={project} index={i} />
+          </div>
         </section>
-    );
+      ))}
+    </div>
+  );
 }

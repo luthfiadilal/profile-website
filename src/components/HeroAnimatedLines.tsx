@@ -67,8 +67,8 @@ export default function HeroAnimatedLines() {
                 // 1. Dapatkan panjang total path untuk mengatur properti jejak (stroke-dasharray)
                 const length = pathEl.getTotalLength();
 
-                // Panjang jejaknya (misal: 15% dari total panjang garis atau ditaruh angka statis misal 150px)
-                const trailLength = Math.min(length * 0.15, 150);
+                // Panjang jejaknya jauh lebih pendek — comet trail
+                const trailLength = Math.min(length * 0.07, 60);
 
                 // Setup awal trail: tip ada di 0 (offset = trailLength)
                 gsap.set(trailEl, {
@@ -93,7 +93,7 @@ export default function HeroAnimatedLines() {
                     ease: "power2.inOut"
                 }, 0);
                 tl.to(trailEl, {
-                    opacity: 0.3, // Jangan terlalu jelas
+                    opacity: 0.35, // Visible tapi tetap subtle
                     duration: 1,
                     ease: "power2.inOut"
                 }, 0);
@@ -161,11 +161,8 @@ export default function HeroAnimatedLines() {
                         </linearGradient>
                     ))}
 
-                    {/* Gradient untuk Jejak (Trail) agar pangkal jejaknya memudar halus (opsional, dbuat solid accent dulu + opacity memudar di timeline) */}
-                    <linearGradient id="trail-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0" />
-                        <stop offset="100%" stopColor="var(--accent-primary)" stopOpacity="1" />
-                    </linearGradient>
+                    {/* Trail taper: solid accent dengan opacity dikontrol GSAP */}
+                    <marker id="trail-taper" />
                 </defs>
 
                 {lines.map((l) => (
@@ -179,13 +176,12 @@ export default function HeroAnimatedLines() {
                             fill="none"
                         />
 
-                        {/* Garis Jejak (Trail) Glow Biru/Hijau */}
-                        {/* Menggunakan stroke-dasharray untuk memotongnya menjadi potongan kecil yang bergerak */}
+                        {/* Trail — solid accent sangat tipis, ujung memudar karena strokeLinecap round */}
                         <path
                             id={`trail-${l.id}`}
                             d={l.path}
                             stroke="var(--accent-primary)"
-                            strokeWidth="2"
+                            strokeWidth="1.5"
                             strokeLinecap="round"
                             fill="none"
                         />
