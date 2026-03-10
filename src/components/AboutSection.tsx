@@ -107,10 +107,6 @@ export default function AboutSection() {
               </span>
               <div className="h-px w-12 bg-[var(--border-color)]" />
             </div>
-
-            <div className="about-emoji opacity-0 text-7xl md:text-8xl mt-12 md:mt-24">
-              👨‍💻
-            </div>
           </div>
 
           {/* Text Side */}
