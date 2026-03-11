@@ -135,7 +135,7 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="pt-32 pb-16 relative bg-[var(--bg-primary)] transition-colors duration-500 overflow-hidden flex flex-col justify-between min-h-[80vh]"
+      className="pt-20 md:pt-32 pb-16 relative bg-[var(--bg-primary)] transition-colors duration-500 overflow-hidden flex flex-col justify-between min-h-[80vh]"
     >
       <div className="max-w-6xl mx-auto px-6 w-full flex-1 flex flex-col">
         {/* Top Section: Let's Collaborate & Links */}
@@ -217,7 +217,7 @@ export default function ContactSection() {
       </div>
 
       {/* Bottom Section: Huge Name Typography */}
-      <div className="w-full overflow-hidden flex items-end justify-center px-4 mt-auto relative pb-4">
+      <div className="w-full overflow-hidden flex items-end justify-center px-4 pt-10 mt-auto relative pb-4">
         <div
           ref={nameRef}
           className="relative"
@@ -227,7 +227,7 @@ export default function ContactSection() {
         >
           {/* Base Typography (Dimmed) */}
           <h1
-            className="font-outfit font-black uppercase text-[12vw] leading-none text-center tracking-tighter text-[var(--text-primary)]/10 whitespace-nowrap"
+            className="font-outfit font-black uppercase text-[15vw] md:text-[12vw] leading-none text-center tracking-tighter text-[var(--text-primary)]/10 whitespace-nowrap"
             style={{ letterSpacing: "-0.04em" }}
           >
             {renderNameCharacters("LUTHFI ADILAL M")}
@@ -235,7 +235,7 @@ export default function ContactSection() {
 
           {/* Spotlight Typography (Accent Color) */}
           <h1
-            className={`font-outfit font-black uppercase text-[12vw] leading-none text-center tracking-tighter text-[var(--accent-primary)] whitespace-nowrap absolute top-0 left-0 pointer-events-none transition-opacity duration-700 ease-out ${isHovering ? "opacity-100" : "opacity-0"}`}
+            className={`font-outfit font-black uppercase text-[15vw] md:text-[12vw] leading-none text-center tracking-tighter text-[var(--accent-primary)] whitespace-nowrap absolute top-0 left-0 pointer-events-none transition-opacity duration-700 ease-out ${isHovering ? "opacity-100" : "opacity-0"}`}
             style={{
               letterSpacing: "-0.04em",
               WebkitMaskImage: `radial-gradient(250px circle at ${mousePos.x}px ${mousePos.y}px, black 0%, transparent 100%)`,

@@ -46,10 +46,10 @@ export default function TechMarquee() {
     <section className="py-20 relative bg-[var(--bg-primary)] transition-colors duration-500">
       <div className="max-w-5xl mx-auto px-6 relative overflow-hidden">
         {/* PERBAIKAN: Ubah left-6 menjadi left-0 agar fade menempel di ujung layar */}
-        <div className="absolute left-0 top-0 w-24 md:w-48 h-full bg-gradient-to-r from-[var(--bg-primary)] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute left-0 top-0 w-12 md:w-48 h-full bg-gradient-to-r from-[var(--bg-primary)] to-transparent z-10 pointer-events-none"></div>
 
         {/* PERBAIKAN: Ubah right-6 menjadi right-0 agar fade menempel di ujung layar */}
-        <div className="absolute right-0 top-0 w-24 md:w-48 h-full bg-gradient-to-l from-[var(--bg-primary)] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 w-12 md:w-48 h-full bg-gradient-to-l from-[var(--bg-primary)] to-transparent z-10 pointer-events-none"></div>
 
         {/* Scrolling Inner Container */}
         <div className="flex w-max animate-marquee whitespace-nowrap">

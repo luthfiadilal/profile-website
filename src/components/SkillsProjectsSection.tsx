@@ -158,7 +158,7 @@ export default function SkillsProjectsSection() {
     <div id="skills" ref={containerRef} className="relative w-full">
       {/* ── Panel 1: Skills ────────── */}
       <section
-        className="sticky-panel sticky top-0 h-screen flex flex-col justify-center"
+        className="sticky-panel sticky top-0 h-screen md:h-screen flex flex-col justify-center"
         style={{ zIndex: 10, backgroundColor: "var(--bg-primary)" }}
       >
         {/* card-inner: the white/light card — no scale animation, no inner shadow */}
@@ -176,7 +176,7 @@ export default function SkillsProjectsSection() {
       {projects.map((project, i) => (
         <section
           key={project.title}
-          className="sticky-panel sticky top-0 h-screen flex flex-col justify-center bg-black"
+          className="sticky-panel sticky top-0 h-screen md:h-screen flex flex-col justify-center bg-black"
           style={{ zIndex: 11 + i }}
         >
           <div

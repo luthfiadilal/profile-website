@@ -111,7 +111,7 @@ export default function ExperienceSection() {
     <section
       id="experience"
       ref={sectionRef}
-      className="py-24 md:py-32 relative bg-[var(--bg-primary)] transition-colors duration-500 clip-path-fix"
+      className="py-20 md:py-32 relative bg-[var(--bg-primary)] transition-colors duration-500 clip-path-fix"
     >
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-start">

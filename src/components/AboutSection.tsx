@@ -95,7 +95,7 @@ export default function AboutSection() {
     <section
       id="about"
       ref={sectionRef}
-      className="py-32 relative bg-[var(--bg-primary)] transition-colors duration-500 overflow-hidden"
+      className="py-20 md:py-32 relative bg-[var(--bg-primary)] transition-colors duration-500 overflow-hidden"
     >
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-start">

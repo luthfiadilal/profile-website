@@ -88,7 +88,7 @@ export default function HeroSection() {
             {/* Animated Background Lines */}
             <HeroAnimatedLines />
 
-            <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 text-center flex flex-col items-center">
+            <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 md:py-32 text-center flex flex-col items-center">
                 {/* Badge */}
                 <div className="hero-badge opacity-0 flex items-center gap-3 px-4 py-1.5 rounded-full border border-[var(--border-color)] bg-[var(--bg-secondary)] text-[var(--text-primary)] text-xs font-medium tracking-wide mb-10">
                     <span className="relative flex h-2 w-2">
@@ -99,7 +99,7 @@ export default function HeroSection() {
                 </div>
 
                 {/* Heading */}
-                <h1 className="font-outfit font-light text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.05] tracking-tighter mb-8 text-[var(--text-primary)]">
+                <h1 className="font-outfit font-light text-4xl md:text-7xl lg:text-[6.5rem] leading-[1.05] tracking-tighter mb-8 text-[var(--text-primary)]">
                     <div className="hero-title-line opacity-0" style={{ perspective: "1000px" }}>Crafting digital</div>
                     <div className="hero-title-line opacity-0" style={{ perspective: "1000px" }}>
                         <span className="font-serif italic text-[var(--accent-primary)]">experiences</span> that
@@ -108,7 +108,7 @@ export default function HeroSection() {
                 </h1>
 
                 {/* Subtitle */}
-                <p className="hero-desc opacity-0 max-w-2xl mx-auto text-[var(--text-secondary)] text-lg md:text-xl font-light leading-relaxed mb-12">
+                <p className="hero-desc opacity-0 max-w-2xl mx-auto text-[var(--text-secondary)] text-base md:text-xl font-light leading-relaxed mb-12">
                     I&apos;m a full-stack developer dedicated to building fast, beautiful, and highly functional web applications. Let&apos;s build something great.
                 </p>
 

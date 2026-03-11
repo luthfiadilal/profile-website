@@ -17,7 +17,7 @@ export default function ProjectPanel({ project, index }: ProjectPanelProps) {
   const palette = PALETTES[project.palette];
 
   return (
-    <div className="max-w-7xl w-full mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-16 items-center relative z-20">
+    <div className="max-w-7xl w-full mx-auto px-6 md:px-12 py-20 md:py-0 flex flex-col lg:flex-row gap-12 lg:gap-16 items-center relative z-20">
       {/* Left Side: Content */}
       <div className="flex-1 w-full order-2 lg:order-1">
         {/* Index label */}
@@ -91,7 +91,7 @@ export default function ProjectPanel({ project, index }: ProjectPanelProps) {
       {/* Right Side: Abstract number visual */}
       <div className="flex-1 w-full flex justify-center lg:justify-end order-1 lg:order-2 fade-up-item">
         <div
-          className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px] rounded-3xl overflow-hidden group flex items-center justify-center"
+          className="relative w-[200px] h-[200px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px] rounded-3xl overflow-hidden group flex items-center justify-center"
           style={{
             backgroundColor: palette.tagBg,
             border: `1px solid ${palette.border}`,
@@ -104,7 +104,7 @@ export default function ProjectPanel({ project, index }: ProjectPanelProps) {
           />
           {/* Number */}
           <div
-            className="font-serif italic text-[10rem] sm:text-[14rem] lg:text-[18rem] select-none opacity-[0.07] transition-all duration-700 ease-out group-hover:opacity-[0.14] group-hover:-translate-y-4"
+            className="font-serif italic text-[7rem] sm:text-[14rem] lg:text-[18rem] select-none opacity-[0.07] transition-all duration-700 ease-out group-hover:opacity-[0.14] group-hover:-translate-y-4"
             style={{ color: palette.textPrimary }}
           >
             0{index + 1}
