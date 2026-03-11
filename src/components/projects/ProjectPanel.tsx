@@ -70,22 +70,6 @@ export default function ProjectPanel({ project, index }: ProjectPanelProps) {
         {/* Links */}
         <div className="flex items-center gap-8 fade-up-item">
           <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-2 text-sm font-semibold uppercase tracking-widest transition-opacity hover:opacity-70"
-            style={{ color: palette.textPrimary }}
-          >
-            <span className="relative">
-              View Live
-              <span
-                className="absolute bottom-0 left-0 w-full h-px translate-y-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300"
-                style={{ backgroundColor: palette.accentText }}
-              />
-            </span>
-            <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-          </a>
-          <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"

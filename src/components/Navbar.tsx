@@ -125,7 +125,7 @@ export default function Navbar() {
                     ${visible ? "translate-y-0" : "-translate-y-full"}
                 `}
       >
-        <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between relative">
           {/* Logo */}
           <Link
             href="#hero"
@@ -135,7 +135,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {navLinks.map((link) => (
               <li key={link.href} className="nav-item">
                 <Link
@@ -149,20 +149,8 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-6 nav-item">
-            <MagneticButton
-              href="#contact"
-              className="px-6 py-2.5 text-sm font-medium rounded-full border border-[var(--accent-primary)] text-[var(--accent-primary)]"
-              blobColor="var(--accent-primary)"
-              hoverTextColor="var(--bg-primary)"
-            >
-              Hire Me
-            </MagneticButton>
-          </div>
-
           {/* Mobile Hamburger */}
-          <div className="md:hidden flex items-center gap-4 nav-item z-50">
+          <div className="md:hidden flex items-center gap-4 nav-item z-50 ml-auto">
             <button
               className="flex flex-col gap-1.5 p-2"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -223,23 +211,6 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-
-        <div
-          ref={(el) => {
-            if (el)
-              itemsRef.current[navLinks.length] =
-                el as unknown as HTMLLIElement;
-          }}
-          className="opacity-0 pt-4"
-        >
-          <Link
-            href="#contact"
-            onClick={closeMenu}
-            className="block w-full text-center py-3 rounded-full border border-[var(--accent-primary)] text-[var(--accent-primary)] text-sm font-medium hover:bg-[var(--accent-primary)] hover:text-[var(--bg-primary)] transition-all duration-300"
-          >
-            Hire Me
-          </Link>
-        </div>
       </div>
     </>
   );

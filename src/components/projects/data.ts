@@ -143,7 +143,7 @@ export const projects: Project[] = [
   {
     title: "CBT Exam System",
     description:
-      "Sistem ujian berbasis komputer (Computer-Based Test) full-stack dengan fitur soal, timer, hasil, dan manajemen peserta ujian.",
+      "Sistem ujian yan menggunakan Sistem Pendukung Keputusan (SPK) dengan metode (SAW) dengan fitur soal, timer, hasil, dan manajemen peserta ujian.",
     tags: ["React", "Node.js", "Express", "Supabase"],
     link: "https://cbt-ruddy.vercel.app",
     github: "https://github.com/luthfiadilal/front-end-CBT",
@@ -156,24 +156,6 @@ export const projects: Project[] = [
     tags: ["Flutter", "Dart", "GIS", "Maps API"],
     link: "#",
     github: "https://github.com/luthfiadilal/app-disaster",
-    palette: "neutral-dark",
-  },
-  {
-    title: "Payout App",
-    description:
-      "Aplikasi manajemen keuangan dan penggajian (payout) yang dibangun dengan TypeScript dan Next.js, dengan UI modern dan responsif.",
-    tags: ["Next.js", "TypeScript", "Tailwind", "Vercel"],
-    link: "https://payout-ruddy.vercel.app",
-    github: "https://github.com/luthfiadilal/Payout",
     palette: "accent-dark",
-  },
-  {
-    title: "Kasir & POS Web",
-    description:
-      "Sistem kasir dan point-of-sale (POS) berbasis web dengan fitur manajemen produk, transaksi, laporan penjualan, dan dashboard admin.",
-    tags: ["JavaScript", "Node.js", "Express", "MySQL"],
-    link: "https://pos-web-omega.vercel.app",
-    github: "https://github.com/luthfiadilal/pos-web",
-    palette: "accent-light",
   },
 ];
