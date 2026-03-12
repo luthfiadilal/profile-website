@@ -113,7 +113,7 @@ export default function AboutSection() {
           <div className="lg:col-span-8 about-text-container">
             <h2 className="about-title opacity-0 font-outfit font-light text-4xl md:text-5xl text-[var(--text-primary)] mb-8 leading-[1.1] tracking-tight">
               Turning ideas into{" "}
-              <span className="font-serif italic text-[var(--accent-primary)]">
+              <span className="font-ganky text-[var(--accent-primary)]">
                 digital reality.
               </span>
             </h2>

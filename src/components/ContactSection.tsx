@@ -150,7 +150,7 @@ export default function ContactSection() {
             </div>
             <h2 className="font-outfit font-light text-5xl md:text-7xl text-[var(--text-primary)] tracking-tight mb-6 leading-[1.1]">
               Mari <br />
-              <span className="font-serif italic text-[var(--accent-primary)]">
+              <span className="font-ganky text-[var(--accent-primary)]">
                 Berkolaborasi.
               </span>
             </h2>

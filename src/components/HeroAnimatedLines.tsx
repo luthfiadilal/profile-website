@@ -41,8 +41,6 @@ const lines = [
   },
 ];
 
-const TRAIL_LENGTH = 150;
-
 export default function HeroAnimatedLines() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -50,36 +48,18 @@ export default function HeroAnimatedLines() {
     () => {
       const ctx = gsap.context(() => {
         lines.forEach((line) => {
-          const pathEl = document.querySelector(
-            `#path-${line.id}`,
-          ) as SVGPathElement;
           const dotEl = document.querySelector(
             `.dot-${line.id}`,
           ) as SVGCircleElement;
-          const maskPathEl = document.querySelector(
-            `.mask-path-${line.id}`,
-          ) as SVGPathElement;
 
-          if (!pathEl || !dotEl || !maskPathEl) return;
+          if (!dotEl) return;
 
-          const length = pathEl.getTotalLength();
-
-          // Initialize mask path with stroke-dasharray
-          gsap.set(maskPathEl, {
-            strokeDasharray: `${TRAIL_LENGTH} ${length + TRAIL_LENGTH}`,
-            strokeDashoffset: TRAIL_LENGTH,
-            opacity: 0,
-          });
           gsap.set(dotEl, { opacity: 0 });
 
           const tl = gsap.timeline({ repeat: -1, delay: line.delay });
 
-          // Fade in
-          tl.to(
-            [dotEl, maskPathEl],
-            { opacity: 1, duration: 0.8, ease: "power2.out" },
-            0,
-          );
+          // Fade in dot
+          tl.to(dotEl, { opacity: 1, duration: 0.8, ease: "power2.out" }, 0);
 
           // Move dot
           tl.to(
@@ -96,20 +76,9 @@ export default function HeroAnimatedLines() {
             0,
           );
 
-          // Animate mask path trail
+          // Fade out dot near end
           tl.to(
-            maskPathEl,
-            {
-              strokeDashoffset: TRAIL_LENGTH - length,
-              duration: line.duration,
-              ease: "none",
-            },
-            0,
-          );
-
-          // Fade out near end
-          tl.to(
-            [dotEl, maskPathEl],
+            dotEl,
             {
               opacity: 0,
               duration: 0.8,
@@ -141,43 +110,17 @@ export default function HeroAnimatedLines() {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <defs>
-          <filter id="mask-blur">
-            <feGaussianBlur stdDeviation="4" />
-          </filter>
-          {lines.map((l) => (
-            <mask
-              id={`mask-${l.id}`}
-              key={`mask-${l.id}`}
-              maskUnits="userSpaceOnUse"
-            >
-              <path
-                className={`mask-path-${l.id}`}
-                d={l.path}
-                stroke="white"
-                strokeWidth="4"
-                strokeLinecap="round"
-                fill="none"
-                filter="url(#mask-blur)"
-              />
-            </mask>
-          ))}
-        </defs>
-
         {lines.map((l) => (
           <g key={`group-${l.id}`}>
-            {/* Base Path (Invisible) */}
-            <path id={`path-${l.id}`} d={l.path} stroke="none" fill="none" />
-
-            {/* Revealed Trail Path */}
+            {/* The Path */}
             <path
+              id={`path-${l.id}`}
               d={l.path}
               stroke="var(--text-primary)"
               strokeWidth="0.8"
               strokeLinecap="round"
               fill="none"
-              opacity="0.15"
-              mask={`url(#mask-${l.id})`}
+              opacity="0.01"
             />
 
             {/* Moving dot */}
@@ -187,6 +130,7 @@ export default function HeroAnimatedLines() {
               fill="var(--bg-primary)"
               stroke="var(--accent-primary)"
               strokeWidth="1.2"
+              style={{ willChange: "transform, opacity" }}
             />
           </g>
         ))}

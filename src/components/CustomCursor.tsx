@@ -6,37 +6,39 @@ export default function CustomCursor() {
     const cursorRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        // Only initialize if the device has a fine pointer (mouse)
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+
         const cursor = cursorRef.current;
         if (!cursor) return;
 
-        // Menggunakan GSAP quickTo untuk animasi pergerakan cursor yang sangat smooth
-        const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power3.out" });
-        const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power3.out" });
+        // Use translate3d for hardware acceleration
+        gsap.set(cursor, { force3D: true });
+
+        const xTo = gsap.quickTo(cursor, "x", { duration: 0.1, ease: "power2.out" });
+        const yTo = gsap.quickTo(cursor, "y", { duration: 0.1, ease: "power2.out" });
 
         const onMouseMove = (e: MouseEvent) => {
-            // Offset -8 agar kursor berada persis di tengah mouse asli (ukuran kursor 16px / 2 = 8)
             xTo(e.clientX - 8);
             yTo(e.clientY - 8);
         };
 
-        // Tambahkan event hover untuk elemen yang bisa di-klik agar kursor membesar
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            const isClickable =
-                target.tagName.toLowerCase() === 'a' ||
-                target.tagName.toLowerCase() === 'button' ||
-                target.closest('a') !== null ||
-                target.closest('button') !== null;
-
-            if (isClickable) {
-                gsap.to(cursor, { scale: 2.5, duration: 0.2, ease: "power2.out" });
-            } else {
-                gsap.to(cursor, { scale: 1, duration: 0.2, ease: "power2.out" });
-            }
+            if (!target) return;
+            
+            const isClickable = target.closest('a, button, [role="button"]');
+            
+            gsap.to(cursor, { 
+                scale: isClickable ? 2.5 : 1, 
+                duration: 0.2, 
+                ease: "power2.out",
+                overwrite: "auto"
+            });
         };
 
-        window.addEventListener("mousemove", onMouseMove);
-        window.addEventListener("mouseover", handleMouseOver);
+        window.addEventListener("mousemove", onMouseMove, { passive: true });
+        window.addEventListener("mouseover", handleMouseOver, { passive: true });
 
         return () => {
             window.removeEventListener("mousemove", onMouseMove);

@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ganky, outfit, inter } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Luthfi — Full Stack Developer",
@@ -23,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className="antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-500">
+      <body className={`${ganky.variable} ${outfit.variable} ${inter.variable} antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-500`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

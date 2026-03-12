@@ -8,7 +8,6 @@ import SplitTitle from "./SplitTitle";
 export default function SkillsPanel() {
   return (
     <div className="max-w-4xl w-full mx-auto px-6 md:px-12 flex flex-col items-center justify-center text-center relative z-20">
-      
       <div className="flex items-center gap-4 mb-8 fade-up-item">
         <div className="h-px w-12 bg-[var(--border-color)] hidden md:block" />
         <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent-primary)]">
@@ -21,15 +20,14 @@ export default function SkillsPanel() {
         <SplitTitle text="Selected" /> <br />
         <SplitTitle
           text="Works."
-          className="font-serif italic text-[var(--accent-primary)]"
+          className="font-ganky text-[var(--accent-primary)]"
         />
       </h2>
 
       <p className="text-[var(--text-secondary)] text-lg md:text-xl lg:text-2xl font-light leading-relaxed max-w-2xl fade-up-item">
-        Kumpulan proyek terpilih yang menunjukkan pengalaman saya dalam membangun
-        aplikasi digital yang fungsional, interaktif, dan terukur.
+        Kumpulan proyek terpilih yang menunjukkan pengalaman saya dalam
+        membangun aplikasi digital yang fungsional, interaktif, dan terukur.
       </p>
-
     </div>
   );
 }
